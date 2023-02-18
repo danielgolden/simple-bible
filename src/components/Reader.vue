@@ -109,11 +109,17 @@ fetch(
 </script>
 
 <template>
-  <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
-  <section v-html="content"></section>
+  <main class="reader">
+    <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
+    <section v-html="content"></section>
+  </main>
 </template>
 
 <style scoped>
+.reader {
+  padding: 0 28px;
+}
+
 section {
   max-width: 60ch;
   padding-bottom: 16rem;
@@ -149,5 +155,11 @@ section {
   margin: 0;
   text-align: center;
   color: var(--color-text-primary);
+}
+
+@media (max-width: 500px) {
+  section {
+    line-height: 140%;
+  }
 }
 </style>
