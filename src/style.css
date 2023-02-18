@@ -1,0 +1,67 @@
+@import url("https://use.typekit.net/alb2bqn.css");
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  /* -webkit-font-smoothing: antialiased; */
+  -webkit-text-size-adjust: 100%;
+
+  --font-family-body: kings-caslon, serif;
+  --font-family-heading: "Inter", system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+
+  --12px: 0.75rem;
+  --14px: 0.875rem;
+  --15px: 0.9375rem;
+  --16px: 1rem;
+  --17px: 1.0625rem;
+  --18px: 1.125rem;
+  --19px: 1.1875rem;
+  --20px: 1.25rem;
+  --21px: 1.3125rem;
+  --22px: 1.375rem;
+  --24px: 1.5rem;
+  --26px: 1.625rem;
+  --28px: 1.75rem;
+  --30px: 1.875rem;
+  --32px: 2rem;
+  --34px: 2.125rem;
+  --36px: 2.25rem;
+  --37px: 2.313rem;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg-surface-1: rgb(255 255 255);
+    --color-text-primary: #111;
+    --color-text-secondary: #111;
+    --color-text-tertiary: #888;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    -webkit-font-smoothing: antialiased;
+    --color-bg-surface-1: rgb(25 25 25);
+    --color-text-primary: rgb(255 255 255 / 95%);
+    --color-text-secondary: rgb(255 255 255 / 90%);
+    --color-text-tertiary: rgb(255 255 255 / 40%);
+  }
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  padding: 0 8rem;
+  background-color: var(--color-bg-surface-1);
+}
