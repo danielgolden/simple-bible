@@ -5,8 +5,12 @@ import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 const content = ref("");
-const book = route.params.book ? route.params.book.toString() : "matthew";
-const chapter = route.params.chapter ? route.params.chapter.toString() : "1";
+const book: string = route.params.book
+  ? route.params.book.toString()
+  : "matthew";
+const chapter: string = route.params.chapter
+  ? route.params.chapter.toString()
+  : "1";
 
 const formatBookTitle = () => {
   const stringContainsNumber = (string: string): boolean => /\d/.test(string);
@@ -21,7 +25,7 @@ const formatBookTitle = () => {
   return book.charAt(0).toUpperCase() + book.slice(1);
 };
 
-const books = {
+const books: Books = {
   genesis: "GEN",
   exodus: "EXO",
   leviticus: "LEV",
