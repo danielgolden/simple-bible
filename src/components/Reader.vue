@@ -160,6 +160,8 @@ section {
 @media (max-width: 500px) {
   section {
     line-height: 140%;
+    padding-bottom: 0;
+    font-size: var(--20px);
   }
 }
 </style>
