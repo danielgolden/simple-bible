@@ -117,12 +117,11 @@ fetch(
 
 <style scoped>
 .reader {
-  padding: 0 7vw;
+  padding: 0 7vw 16vw;
 }
 
 section {
   max-width: 60ch;
-  padding-bottom: 16rem;
   font-size: var(--22px);
   line-height: 157%;
   font-family: var(--font-family-body);
@@ -159,6 +158,12 @@ section {
 
 :deep(.wj) {
   color: var(--color-text-jesus-words);
+}
+
+@media (max-width: 1024px) {
+  .reader {
+    padding: 7vw 7vw 7vw;
+  }
 }
 
 @media (max-width: 500px) {
