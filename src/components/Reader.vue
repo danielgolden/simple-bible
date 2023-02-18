@@ -157,6 +157,10 @@ section {
   color: var(--color-text-primary);
 }
 
+:deep(.wj) {
+  color: var(--color-text-jesus-words);
+}
+
 @media (max-width: 500px) {
   section {
     line-height: 140%;
