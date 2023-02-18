@@ -1,7 +1,6 @@
 @import url("https://use.typekit.net/alb2bqn.css");
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -41,7 +40,7 @@
     --color-text-primary: #111;
     --color-text-secondary: #111;
     --color-text-tertiary: #888;
-    --color-text-jesus-words: #900505;
+    --color-text-jesus-words: #a22525;
   }
 }
 
@@ -52,7 +51,7 @@
     --color-text-primary: rgb(255 255 255 / 95%);
     --color-text-secondary: rgb(255 255 255 / 90%);
     --color-text-tertiary: rgb(255 255 255 / 40%);
-    --color-text-jesus-words: #e18585;
+    --color-text-jesus-words: #e88a8a;
   }
 }
 

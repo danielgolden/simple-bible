@@ -117,27 +117,27 @@ fetch(
 
 <style scoped>
 .reader {
-  padding: 0 28px;
+  padding: 0 7vw;
 }
 
 section {
   max-width: 60ch;
   padding-bottom: 16rem;
   font-size: var(--22px);
-  line-height: 150%;
+  line-height: 157%;
   font-family: var(--font-family-body);
   color: var(--color-text-secondary);
 }
 
 :deep(.v) {
   /* display: none; */
-  margin-right: 0.15rem;
+  margin-right: 0.18rem;
   color: var(--color-text-tertiary);
   vertical-align: super;
-  font-size: var(--12px);
+  font-size: var(--14px);
   line-height: 0;
   position: relative;
-  top: 1.5px;
+  top: 3px;
   -webkit-font-smoothing: auto;
   /* font-family: var(--font-family-heading); */
 }
@@ -163,9 +163,17 @@ section {
 
 @media (max-width: 500px) {
   section {
-    line-height: 140%;
+    line-height: 150%;
     padding-bottom: 0;
     font-size: var(--20px);
+  }
+
+  .reader {
+    padding: 0 4vw;
+  }
+
+  .chapter-title {
+    padding: 50px 0;
   }
 }
 </style>
