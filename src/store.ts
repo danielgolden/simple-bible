@@ -7,5 +7,6 @@ export const store = reactive({
   theme: "dark",
   displayVerseNumbers: true,
   lineLength: 60,
-  fontSize: 22,
+  fontSize: 1.375,
+  readerElement: <null | HTMLElement>null,
 });

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Button from "./Button.vue";
+import { store } from "../store";
 import SettingsView from "./SettingsView.vue";
 
+const reader = ref<HTMLElement | null>(null);
 const router = useRouter();
 const route = useRoute();
 const content = ref("");
@@ -110,10 +112,17 @@ fetch(
     contentLoaded.value = true;
     content.value = data.data.content.replaceAll("¶ ", "");
   });
+
+watch(
+  () => reader.value,
+  () => {
+    store.readerElement = reader.value;
+  }
+);
 </script>
 
 <template>
-  <main class="reader" v-if="contentLoaded">
+  <main class="reader" v-if="contentLoaded" ref="reader">
     <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
     <section class="body-content" v-html="content"></section>
 
@@ -125,25 +134,29 @@ fetch(
 <style scoped>
 .reader {
   padding: 0 7vw 16vw;
+
+  --verse-numbers-display: inline;
+  --body-font-size: var(--22px);
+  --body-line-length: 60ch;
 }
 
 .body-content {
-  max-width: 60ch;
-  font-size: var(--22px);
+  max-width: var(--body-line-length);
+  font-size: var(--body-font-size);
   line-height: 157%;
   font-family: var(--font-family-body);
   color: var(--color-text-secondary);
 }
 
 .body-content :deep(.v) {
-  /* display: none; */
+  display: var(--verse-numbers-display);
   margin-right: 0.18rem;
   color: var(--color-text-tertiary);
   vertical-align: super;
-  font-size: var(--14px);
+  font-size: 0.6em;
   line-height: 0;
   position: relative;
-  top: 3px;
+  top: 0.2em;
   -webkit-font-smoothing: auto;
   /* font-family: var(--font-family-heading); */
 }

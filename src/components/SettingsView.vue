@@ -1,8 +1,48 @@
 <script setup lang="ts">
+import { watch } from "vue";
 import { store } from "../store";
-import { useRouter, useRoute } from "vue-router";
 import Button from "./Button.vue";
 import Icon from "./Icon.vue";
+
+watch(
+  () => store.displayVerseNumbers,
+  (newValue) => {
+    store.readerElement!.style.setProperty(
+      "--verse-numbers-display",
+      store.displayVerseNumbers ? "inline" : "none"
+    );
+  }
+);
+
+watch(
+  () => store.bodyFont,
+  (newValue) => {
+    document.documentElement.style.setProperty(
+      "--font-family-body",
+      store.bodyFont
+    );
+  }
+);
+
+watch(
+  () => store.fontSize,
+  (newValue) => {
+    store.readerElement!.style.setProperty(
+      "--body-font-size",
+      `${store.fontSize}rem`
+    );
+  }
+);
+
+watch(
+  () => store.lineLength,
+  (newValue) => {
+    store.readerElement!.style.setProperty(
+      "--body-line-length",
+      `${store.lineLength}ch`
+    );
+  }
+);
 </script>
 
 <template>
@@ -103,7 +143,10 @@ import Icon from "./Icon.vue";
               active: store.bodyFont === 'system',
             }"
             data-font="system"
-            @click="store.bodyFont = 'system'"
+            @click="
+              store.bodyFont =
+                'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif'
+            "
           >
             System font
             <Icon
@@ -123,10 +166,10 @@ import Icon from "./Icon.vue";
             type="range"
             class="settings-slider"
             id="font-size"
-            v-model="store.fontSize"
+            v-model="store.lineLength"
             name="volume"
-            min="13"
-            max="36"
+            min="55"
+            max="95"
           />
           <div class="settings-slider-labels">
             <span class="settings-slider-label-min"
@@ -147,10 +190,11 @@ import Icon from "./Icon.vue";
             type="range"
             class="settings-slider"
             id="font-size"
-            v-model="store.lineLength"
+            v-model="store.fontSize"
             name="volume"
-            min="13"
-            max="36"
+            step=".05"
+            min=".813"
+            max="2.25"
           />
           <div class="settings-slider-labels">
             <span class="settings-slider-label-min">Aa</span>
@@ -217,6 +261,7 @@ import Icon from "./Icon.vue";
   border-bottom: 1px solid var(--color-border-primary);
   cursor: pointer;
   color: var(--color-text-muted);
+  transition: all 35ms var(--ease-out-quad);
 }
 
 .control-font-option.active {
