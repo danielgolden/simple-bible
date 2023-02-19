@@ -55,7 +55,7 @@
   --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 
-main[data-theme="light"] {
+[data-theme="light"] {
   --color-bg-surface-1: rgb(255 255 255);
   --color-bg-surface-2: rgb(245 245 245);
 
@@ -84,10 +84,10 @@ main[data-theme="light"] {
   --color-bg-interactive-focused: var(--color-text-tertiary);
 }
 
-main[data-theme="dark"] {
+html[data-theme="dark"] {
   -webkit-font-smoothing: antialiased;
   --color-bg-surface-1: rgb(25 25 25);
-  --color-bg-surface-2: #161616;
+  --color-bg-surface-2: #222;
 
   --color-text-primary: rgb(255 255 255 / 90%);
   --color-text-secondary: rgb(255 255 255 / 84%);
@@ -133,4 +133,5 @@ body {
   display: flex;
   justify-content: center;
   font-family: var(--font-family-heading);
+  background-color: var(--color-bg-surface-1);
 }

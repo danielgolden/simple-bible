@@ -5,6 +5,7 @@ const setUserColorSchemePreference = () => {
   store.theme = window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
+  document.documentElement.dataset.theme = store.theme;
 };
 
 setUserColorSchemePreference();
@@ -18,7 +19,7 @@ if (mediaQuery?.addEventListener) {
 </script>
 
 <template>
-  <main :data-theme="store.theme">
+  <main>
     <router-view></router-view>
   </main>
 </template>

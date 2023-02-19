@@ -123,7 +123,10 @@ watch(
 
 <template>
   <div
-    :class="{ reader: true, 'settings-view-active': store.settingsViewActive }"
+    :class="{
+      reader: true,
+      'settings-view-active': store.settingsViewActive,
+    }"
     v-if="contentLoaded"
     ref="reader"
   >
@@ -137,7 +140,9 @@ watch(
       @click="store.settingsViewActive = !store.settingsViewActive"
     ></Button>
   </div>
-  <SettingsView v-if="store.settingsViewActive" />
+  <transition name="settings">
+    <SettingsView v-if="store.settingsViewActive" />
+  </transition>
 </template>
 
 <style scoped>
@@ -153,10 +158,7 @@ main {
   --verse-numbers-display: inline;
   --body-font-size: var(--22px);
   --body-line-length: 60ch;
-}
-
-.reader.settings-view-active {
-  translate: calc(-393px / 2) 0;
+  transition: translate 0.25s var(--ease-out-cubic);
 }
 
 .body-content {
@@ -205,8 +207,18 @@ main {
   right: 16px;
 }
 
-.settings-view-active .btn-settings {
-  right: 214px;
+/* we will explain what these classes do next! */
+.settings-enter-active {
+  transition: all 0.5s var(--ease-out-expo);
+}
+.settings-leave-active {
+  transition: all 0.15s var(--ease-in-quad);
+}
+
+.settings-enter-from,
+.settings-leave-to {
+  transform: translateY(325px);
+  scale: 0.9875;
 }
 
 @media (max-width: 1024px) {

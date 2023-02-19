@@ -5,6 +5,13 @@ import Button from "./Button.vue";
 import Icon from "./Icon.vue";
 
 watch(
+  () => store.theme,
+  (newValue) => {
+    document.documentElement.dataset.theme = store.theme;
+  }
+);
+
+watch(
   () => store.displayVerseNumbers,
   (newValue) => {
     store.readerElement!.style.setProperty(
@@ -47,8 +54,14 @@ watch(
 
 <template>
   <section class="settings">
+    <Button
+      class="btn-close-settings"
+      icon="cross-1"
+      @click="store.settingsViewActive = false"
+      type="tertiary"
+    />
     <div class="settings-primary-content">
-      <div class="setting-block">
+      <div class="setting-block setting-block-theme">
         <label class="setting-label">Theme</label>
         <div class="setting-block-control control-theme">
           <Button
@@ -67,7 +80,7 @@ watch(
           >
         </div>
       </div>
-      <div class="setting-block">
+      <div class="setting-block setting-block-verse-number">
         <label class="setting-label">Verse numbers</label>
         <div class="setting-block-control control-verse-numbers">
           <Button
@@ -86,11 +99,9 @@ watch(
           >
         </div>
       </div>
-      <div class="setting-block">
+      <div class="setting-block setting-block-font">
         <label class="setting-label">Font</label>
-        <ul
-          class="setting-block-control setting-block-control-slider control-font"
-        >
+        <ul class="setting-block-control control-font">
           <li
             :class="{
               'control-font-option': true,
@@ -110,14 +121,14 @@ watch(
           <li
             :class="{
               'control-font-option': true,
-              active: store.bodyFont === 'franklin-gothic-atf',
+              active: store.bodyFont === 'plantin',
             }"
             data-font="franklin-gothic-atf"
-            @click="store.bodyFont = 'franklin-gothic-atf'"
+            @click="store.bodyFont = 'plantin'"
           >
-            Franklin Gothic
+            Plantin
             <Icon
-              v-if="store.bodyFont === 'franklin-gothic-atf'"
+              v-if="store.bodyFont === 'plantin'"
               name="check"
               color="var(--color-text-primary)"
             />
@@ -157,7 +168,7 @@ watch(
           </li>
         </ul>
       </div>
-      <div class="setting-block">
+      <div class="setting-block setting-block-font-size">
         <label class="setting-label" for="font-size">Font size</label>
         <div class="setting-block-control control-font-size">
           <input
@@ -166,8 +177,8 @@ watch(
             id="font-size"
             v-model="store.fontSize"
             name="volume"
-            step=".05"
-            min=".813"
+            step=".25"
+            min="1"
             max="2.25"
           />
           <div class="settings-slider-labels">
@@ -176,7 +187,7 @@ watch(
           </div>
         </div>
       </div>
-      <div class="setting-block">
+      <div class="setting-block setting-block-line-length">
         <label class="setting-label" for="line-length">Line length</label>
         <div
           class="setting-block-control setting-block-control-slider control-line-length"
@@ -208,26 +219,57 @@ watch(
 
 <style scoped>
 .settings {
+  width: 75%;
   position: fixed;
-  right: 0;
-  top: 0;
-  width: 320px;
-  height: 100vh;
-  padding: 36px;
+  left: 50%;
+  bottom: 36px;
+  translate: -50% 0;
+  padding: 24px;
   background-color: var(--color-bg-surface-2);
-  border-left: 1px solid var(--color-border-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 10%), 0 4px 15px rgb(0 0 0 / 5%),
+    0 20px 75px rgb(0 0 0 / 20%);
+  overflow: hidden;
 }
 
 .settings-primary-content {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "theme          font     font-size"
+    "verse-numbers  font     line-length";
+  row-gap: 16px;
+  column-gap: 36px;
+}
+
+.btn-close-settings {
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 
 .setting-block {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.setting-block-theme {
+  grid-area: theme;
+}
+.setting-block-verse-numbers {
+  grid-area: verse-numbers;
+}
+.setting-block-font {
+  grid-area: font;
+}
+.setting-block-font-size {
+  grid-area: font-size;
+}
+.setting-block-line-length {
+  grid-area: line-length;
 }
 .btn-setting-block {
   flex-grow: 1;
@@ -258,7 +300,7 @@ watch(
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--color-border-primary);
   cursor: pointer;
   color: var(--color-text-muted);
