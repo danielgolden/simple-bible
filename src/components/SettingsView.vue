@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { store } from "../store";
 import { useRouter, useRoute } from "vue-router";
 import Button from "./Button.vue";
 import Icon from "./Icon.vue";
@@ -11,15 +11,37 @@ import Icon from "./Icon.vue";
       <div class="setting-block">
         <label class="setting-label">Theme</label>
         <div class="setting-block-control control-theme">
-          <Button icon="sun" class="btn-setting-block">Light</Button>
-          <Button icon="moon" class="btn-setting-block" inactive>Dark</Button>
+          <Button
+            icon="sun"
+            class="btn-setting-block"
+            @click="store.theme = 'light'"
+            :inactive="store.theme === 'dark'"
+            >Light</Button
+          >
+          <Button
+            icon="moon"
+            class="btn-setting-block"
+            @click="store.theme = 'dark'"
+            :inactive="store.theme === 'light'"
+            >Dark</Button
+          >
         </div>
       </div>
       <div class="setting-block">
         <label class="setting-label">Verse numbers</label>
         <div class="setting-block-control control-verse-numbers">
-          <Button icon="eye-open" class="btn-setting-block">Visible</Button>
-          <Button icon="eye-closed" class="btn-setting-block" inactive
+          <Button
+            icon="eye-open"
+            class="btn-setting-block"
+            @click="store.displayVerseNumbers = true"
+            :inactive="!store.displayVerseNumbers"
+            >Visible</Button
+          >
+          <Button
+            icon="eye-closed"
+            class="btn-setting-block"
+            @click="store.displayVerseNumbers = false"
+            :inactive="store.displayVerseNumbers"
             >Hidden</Button
           >
         </div>
@@ -29,21 +51,66 @@ import Icon from "./Icon.vue";
         <ul
           class="setting-block-control setting-block-control-slider control-font"
         >
-          <li class="control-font-option active" data-font="kings-caslon">
+          <li
+            :class="{
+              'control-font-option': true,
+              active: store.bodyFont === 'kings-caslon',
+            }"
+            data-font="kings-caslon"
+            @click="store.bodyFont = 'kings-caslon'"
+            :inactive="store.bodyFont !== 'kings-caslon'"
+          >
             King's Caslon
-            <Icon v-if="true" name="check" color="var(--color-text-primary)" />
+            <Icon
+              v-if="store.bodyFont === 'kings-caslon'"
+              name="check"
+              color="var(--color-text-primary)"
+            />
           </li>
-          <li class="control-font-option" data-font="franklin-gothic-atf">
+          <li
+            :class="{
+              'control-font-option': true,
+              active: store.bodyFont === 'franklin-gothic-atf',
+            }"
+            data-font="franklin-gothic-atf"
+            @click="store.bodyFont = 'franklin-gothic-atf'"
+          >
             Franklin Gothic
-            <Icon v-if="false" name="check" color="var(--color-text-primary)" />
+            <Icon
+              v-if="store.bodyFont === 'franklin-gothic-atf'"
+              name="check"
+              color="var(--color-text-primary)"
+            />
           </li>
-          <li class="control-font-option" data-font="freight-text-pro">
+          <li
+            :class="{
+              'control-font-option': true,
+              active: store.bodyFont === 'freight-text-pro',
+            }"
+            data-font="freight-text-pro"
+            @click="store.bodyFont = 'freight-text-pro'"
+          >
             Freight Text
-            <Icon v-if="false" name="check" color="var(--color-text-primary)" />
+            <Icon
+              v-if="store.bodyFont === 'freight-text-pro'"
+              name="check"
+              color="var(--color-text-primary)"
+            />
           </li>
-          <li class="control-font-option" data-font="system">
+          <li
+            :class="{
+              'control-font-option': true,
+              active: store.bodyFont === 'system',
+            }"
+            data-font="system"
+            @click="store.bodyFont = 'system'"
+          >
             System font
-            <Icon v-if="false" name="check" color="var(--color-text-primary)" />
+            <Icon
+              v-if="store.bodyFont === 'system'"
+              name="check"
+              color="var(--color-text-primary)"
+            />
           </li>
         </ul>
       </div>
