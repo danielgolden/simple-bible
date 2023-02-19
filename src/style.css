@@ -37,10 +37,20 @@
 @media (prefers-color-scheme: light) {
   :root {
     --color-bg-surface-1: rgb(255 255 255);
+
     --color-text-primary: #333;
     --color-text-secondary: #333;
     --color-text-tertiary: #888;
     --color-text-jesus-words: #a22525;
+
+    --color-icon-primary: #777777;
+
+    --color-bg-button-primary: transparent;
+    --color-bg-button-hover-primary: var(--color-bg-button-primary);
+    --color-border-button-primary: #d7d7d7;
+    --color-border-button-hover-primary: #c2c2c2;
+    --color-text-button-primary: var(--color-text-primary);
+    --color-text-button-hover-primary: var(--color-text-primary);
   }
 }
 
@@ -48,10 +58,38 @@
   :root {
     -webkit-font-smoothing: antialiased;
     --color-bg-surface-1: rgb(25 25 25);
+    --color-bg-surface-2: #161616;
+
     --color-text-primary: rgb(255 255 255 / 90%);
     --color-text-secondary: rgb(255 255 255 / 84%);
     --color-text-tertiary: rgb(255 255 255 / 30%);
+    --color-text-muted: #888888;
     --color-text-jesus-words: #e88a8a;
+
+    --color-border-primary: #2d2d2d;
+    --color-border-secondary: #202020;
+
+    --color-icon-primary: #888888;
+    --color-icon-secondary: #444444;
+
+    --color-bg-button-primary: #1e1e1e;
+    --color-bg-button-hover-primary: #1f1f1f;
+    --color-border-button-primary: #2d2d2d;
+    --color-border-button-hover-primary: #2d2d2d;
+    --color-text-button-primary: var(--color-text-primary);
+    --color-text-button-hover-primary: var(--color-text-primary);
+    --color-bg-button-tertiary: transparent;
+    --color-bg-button-hover-tertiary: transparent;
+    --color-border-button-tertiary: #transparent;
+    --color-border-button-hover-tertiary: #2d2d2d;
+    --color-text-button-tertiary: var(--color-text-tertiary);
+    --color-text-button-hover-tertiary: var(--color-text-tertiary);
+
+    --color-bg-interactive: transparent;
+    --color-bg-interactive-hover: #191919;
+    --color-bg-interactive-active: #1e1e1e;
+    --color-bg-interactive-active-hover: var(--color-bg-interactive-active);
+    --color-bg-interactive-focused: var(--color-text-tertiary);
   }
 }
 
@@ -64,4 +102,5 @@ body {
   display: flex;
   justify-content: center;
   background-color: var(--color-bg-surface-1);
+  font-family: var(--font-family-heading);
 }

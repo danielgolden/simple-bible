@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import Button from "./Button.vue";
+import SettingsView from "./SettingsView.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -113,7 +115,10 @@ fetch(
 <template>
   <main class="reader" v-if="contentLoaded">
     <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
-    <section v-html="content"></section>
+    <section class="body-content" v-html="content"></section>
+
+    <Button icon="settings" class="btn-settings" type="tertiary"></Button>
+    <SettingsView />
   </main>
 </template>
 
@@ -122,7 +127,7 @@ fetch(
   padding: 0 7vw 16vw;
 }
 
-section {
+.body-content {
   max-width: 60ch;
   font-size: var(--22px);
   line-height: 157%;
@@ -130,7 +135,7 @@ section {
   color: var(--color-text-secondary);
 }
 
-section :deep(.v) {
+.body-content :deep(.v) {
   /* display: none; */
   margin-right: 0.18rem;
   color: var(--color-text-tertiary);
@@ -160,6 +165,12 @@ section :deep(.v) {
 
 :deep(.wj) {
   color: var(--color-text-jesus-words);
+}
+
+.btn-settings {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
 }
 
 @media (max-width: 1024px) {
