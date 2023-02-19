@@ -41,6 +41,23 @@ const props = defineProps({
     />
   </svg>
   <svg
+    v-if="name === 'box'"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="`icon ${props.class}`"
+    :opacity="opacity"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M12.5 2H2.5C2.22386 2 2 2.22386 2 2.5V12.5C2 12.7761 2.22386 13 2.5 13H12.5C12.7761 13 13 12.7761 13 12.5V2.5C13 2.22386 12.7761 2 12.5 2ZM2.5 1C1.67157 1 1 1.67157 1 2.5V12.5C1 13.3284 1.67157 14 2.5 14H12.5C13.3284 14 14 13.3284 14 12.5V2.5C14 1.67157 13.3284 1 12.5 1H2.5Z"
+      :fill="color ?? 'var(--color-text-secondary)'"
+    />
+  </svg>
+  <svg
     v-if="name === 'caret-down'"
     width="15"
     height="15"
@@ -343,6 +360,23 @@ const props = defineProps({
       d="M4.47614 5.17669H2.67461L5.23621 12.5208H10.2638L12.8254 5.17669H11.0239H10.2711L10.5897 4.4947L11.3173 2.9375H4.18271L4.91026 4.4947L5.2289 5.17669H4.47614Z"
       :stroke="color ?? 'var(--color-text-secondary)'"
       stroke-width="1"
+    />
+  </svg>
+  <svg
+    v-if="name === 'rectangle-vertical'"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="`icon ${props.class}`"
+    :opacity="opacity"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M5 13H10V2H5V13ZM4 13C4 13.5523 4.44772 14 5 14H10C10.5523 14 11 13.5523 11 13V2C11 1.44772 10.5523 1 10 1H5C4.44772 1 4 1.44771 4 2V13Z"
+      :fill="color ?? 'var(--color-text-secondary)'"
     />
   </svg>
   <svg

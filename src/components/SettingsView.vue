@@ -26,7 +26,9 @@ import Icon from "./Icon.vue";
       </div>
       <div class="setting-block">
         <label class="setting-label">Font</label>
-        <ul class="setting-block-control control-font">
+        <ul
+          class="setting-block-control setting-block-control-slider control-font"
+        >
           <li class="control-font-option active" data-font="kings-caslon">
             King's Caslon
             <Icon v-if="true" name="check" color="var(--color-text-primary)" />
@@ -46,8 +48,46 @@ import Icon from "./Icon.vue";
         </ul>
       </div>
       <div class="setting-block">
-        <label class="setting-label"></label>
-        <div class="setting-block-control"></div>
+        <label class="setting-label" for="line-length">Line length</label>
+        <div
+          class="setting-block-control setting-block-control-slider control-line-length"
+        >
+          <input
+            type="range"
+            class="settings-slider"
+            id="font-size"
+            name="volume"
+            min="13"
+            max="36"
+          />
+          <div class="settings-slider-labels">
+            <span class="settings-slider-label-min"
+              ><Icon
+                name="rectangle-vertical"
+                color="var(--color-text-tertiary)"
+            /></span>
+            <span class="settings-slider-label-max"
+              ><Icon name="box" color="var(--color-text-tertiary)"
+            /></span>
+          </div>
+        </div>
+      </div>
+      <div class="setting-block">
+        <label class="setting-label" for="font-size">Font size</label>
+        <div class="setting-block-control control-font-size">
+          <input
+            type="range"
+            class="settings-slider"
+            id="font-size"
+            name="volume"
+            min="13"
+            max="36"
+          />
+          <div class="settings-slider-labels">
+            <span class="settings-slider-label-min">Aa</span>
+            <span class="settings-slider-label-max">Aa</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -129,15 +169,42 @@ import Icon from "./Icon.vue";
   font-size: var(--18px);
   font-family: kings-caslon;
 }
+
 .control-font-option[data-font="franklin-gothic-atf"] {
   font-family: franklin-gothic-atf;
 }
+
 .control-font-option[data-font="freight-text-pro"] {
   font-size: var(--19px);
   font-family: freight-text-pro;
 }
+
 .control-font-option[data-font="system"] {
   font-size: var(--17px);
   font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.setting-block-control-slider {
+  margin-top: -5px;
+}
+
+.settings-slider {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.settings-slider-labels {
+  margin-top: -2px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-muted);
+}
+
+.control-font-size .settings-slider-label-min {
+  font-size: var(--12px);
+}
+
+.control-font-size .settings-slider-label-max {
+  font-size: var(--18px);
 }
 </style>
