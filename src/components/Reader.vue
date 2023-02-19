@@ -5,6 +5,7 @@ import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 const content = ref("");
+const contentLoaded = ref(false);
 const book: string = route.params.book
   ? route.params.book.toString()
   : "matthew";
@@ -104,12 +105,13 @@ fetch(
 )
   .then((response) => response.json())
   .then((data) => {
+    contentLoaded.value = true;
     content.value = data.data.content.replaceAll("¶ ", "");
   });
 </script>
 
 <template>
-  <main class="reader">
+  <main class="reader" v-if="contentLoaded">
     <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
     <section v-html="content"></section>
   </main>
@@ -128,7 +130,7 @@ section {
   color: var(--color-text-secondary);
 }
 
-:deep(.v) {
+section :deep(.v) {
   /* display: none; */
   margin-right: 0.18rem;
   color: var(--color-text-tertiary);
@@ -162,7 +164,7 @@ section {
 
 @media (max-width: 1024px) {
   .reader {
-    padding: 7vw 7vw 7vw;
+    padding: 0 7vw 7vw;
   }
 }
 

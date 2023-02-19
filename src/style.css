@@ -37,8 +37,8 @@
 @media (prefers-color-scheme: light) {
   :root {
     --color-bg-surface-1: rgb(255 255 255);
-    --color-text-primary: #111;
-    --color-text-secondary: #111;
+    --color-text-primary: #333;
+    --color-text-secondary: #333;
     --color-text-tertiary: #888;
     --color-text-jesus-words: #a22525;
   }
@@ -48,9 +48,9 @@
   :root {
     -webkit-font-smoothing: antialiased;
     --color-bg-surface-1: rgb(25 25 25);
-    --color-text-primary: rgb(255 255 255 / 95%);
-    --color-text-secondary: rgb(255 255 255 / 90%);
-    --color-text-tertiary: rgb(255 255 255 / 40%);
+    --color-text-primary: rgb(255 255 255 / 90%);
+    --color-text-secondary: rgb(255 255 255 / 84%);
+    --color-text-tertiary: rgb(255 255 255 / 30%);
     --color-text-jesus-words: #e88a8a;
   }
 }
