@@ -122,22 +122,41 @@ watch(
 </script>
 
 <template>
-  <main class="reader" v-if="contentLoaded" ref="reader">
+  <div
+    :class="{ reader: true, 'settings-view-active': store.settingsViewActive }"
+    v-if="contentLoaded"
+    ref="reader"
+  >
     <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
     <section class="body-content" v-html="content"></section>
 
-    <Button icon="settings" class="btn-settings" type="tertiary"></Button>
-    <SettingsView />
-  </main>
+    <Button
+      icon="settings"
+      class="btn-settings"
+      type="tertiary"
+      @click="store.settingsViewActive = !store.settingsViewActive"
+    ></Button>
+  </div>
+  <SettingsView v-if="store.settingsViewActive" />
 </template>
 
 <style scoped>
+main {
+  display: contents;
+}
 .reader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 7vw 16vw;
 
   --verse-numbers-display: inline;
   --body-font-size: var(--22px);
   --body-line-length: 60ch;
+}
+
+.reader.settings-view-active {
+  translate: calc(-393px / 2) 0;
 }
 
 .body-content {
@@ -184,6 +203,10 @@ watch(
   position: fixed;
   bottom: 16px;
   right: 16px;
+}
+
+.settings-view-active .btn-settings {
+  right: 214px;
 }
 
 @media (max-width: 1024px) {

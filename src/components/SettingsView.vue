@@ -150,38 +150,12 @@ watch(
           >
             System font
             <Icon
-              v-if="store.bodyFont === 'system'"
+              v-if="store.bodyFont.includes('system')"
               name="check"
               color="var(--color-text-primary)"
             />
           </li>
         </ul>
-      </div>
-      <div class="setting-block">
-        <label class="setting-label" for="line-length">Line length</label>
-        <div
-          class="setting-block-control setting-block-control-slider control-line-length"
-        >
-          <input
-            type="range"
-            class="settings-slider"
-            id="font-size"
-            v-model="store.lineLength"
-            name="volume"
-            min="55"
-            max="95"
-          />
-          <div class="settings-slider-labels">
-            <span class="settings-slider-label-min"
-              ><Icon
-                name="rectangle-vertical"
-                color="var(--color-text-tertiary)"
-            /></span>
-            <span class="settings-slider-label-max"
-              ><Icon name="box" color="var(--color-text-tertiary)"
-            /></span>
-          </div>
-        </div>
       </div>
       <div class="setting-block">
         <label class="setting-label" for="font-size">Font size</label>
@@ -199,6 +173,32 @@ watch(
           <div class="settings-slider-labels">
             <span class="settings-slider-label-min">Aa</span>
             <span class="settings-slider-label-max">Aa</span>
+          </div>
+        </div>
+      </div>
+      <div class="setting-block">
+        <label class="setting-label" for="line-length">Line length</label>
+        <div
+          class="setting-block-control setting-block-control-slider control-line-length"
+        >
+          <input
+            type="range"
+            class="settings-slider"
+            id="font-size"
+            v-model="store.lineLength"
+            name="volume"
+            min="50"
+            max="70"
+          />
+          <div class="settings-slider-labels">
+            <span class="settings-slider-label-min"
+              ><Icon
+                name="rectangle-vertical"
+                color="var(--color-text-tertiary)"
+            /></span>
+            <span class="settings-slider-label-max"
+              ><Icon name="box" color="var(--color-text-tertiary)"
+            /></span>
           </div>
         </div>
       </div>
@@ -236,6 +236,7 @@ watch(
 .setting-label {
   font-size: var(--14px);
   font-weight: 500;
+  color: var(--color-text-primary);
 }
 
 .control-theme,

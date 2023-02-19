@@ -22,11 +22,6 @@ const router = createRouter({
       name: "Book and chapter",
       component: Reader,
     },
-    {
-      path: "/about",
-      name: "About",
-      component: Reader,
-    },
   ],
 });
 
