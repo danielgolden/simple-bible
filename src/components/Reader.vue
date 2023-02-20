@@ -152,11 +152,8 @@ main {
 
   --verse-numbers-display: inline;
   --body-font-size: var(--22px);
+  --title-font-size: calc(var(--body-font-size) * 1.6363636364);
   --body-line-length: 60ch;
-}
-
-.reader.settings-view-active {
-  translate: calc(-393px / 2) 0;
 }
 
 .body-content {
@@ -187,10 +184,11 @@ main {
 .chapter-title {
   align-items: center;
   justify-content: center;
-  padding: 75px 0;
+  padding: 2.1em 0;
   font-family: var(--font-family-heading);
-  font-size: var(--36px);
+  font-size: var(--title-font-size);
   margin: 0;
+  font-weight: 700;
   text-align: center;
   color: var(--color-text-primary);
 }
@@ -206,7 +204,8 @@ main {
 }
 
 .settings-view-active .btn-settings {
-  right: 214px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 1024px) {

@@ -2,7 +2,31 @@
 import { watch } from "vue";
 import { store } from "../store";
 import Button from "./Button.vue";
+import Switch from "./Switch.vue";
 import Icon from "./Icon.vue";
+
+const fontOptions = [
+  {
+    id: "caslon",
+    displayName: "King's Caslon",
+    value: "kings-caslon",
+  },
+  {
+    id: "plantin",
+    displayName: "Plantin",
+    value: "plantin",
+  },
+  {
+    id: "freight",
+    displayName: "Freight Text",
+    value: "freight-text-pro",
+  },
+  {
+    id: "system",
+    displayName: "System font",
+    value: "inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
+  },
+];
 
 watch(
   () => store.displayVerseNumbers,
@@ -47,110 +71,61 @@ watch(
 
 <template>
   <section class="settings">
+    <div class="settings-header">
+      <Button
+        class="btn-close-settings"
+        icon="cross-1"
+        @click="store.settingsViewActive = false"
+        type="tertiary"
+      />
+    </div>
     <div class="settings-primary-content">
+      <h3>Design</h3>
       <div class="setting-block">
-        <label class="setting-label">Theme</label>
         <div class="setting-block-control control-theme">
           <Button
             icon="sun"
             class="btn-setting-block"
             @click="store.theme = 'light'"
             :inactive="store.theme === 'dark'"
-            >Light</Button
-          >
+            >Light
+            <span class="radio-container"
+              ><input type="radio" :checked="store.theme === 'light'" /></span
+          ></Button>
           <Button
             icon="moon"
             class="btn-setting-block"
             @click="store.theme = 'dark'"
-            :inactive="store.theme === 'light'"
-            >Dark</Button
-          >
+            >Dark
+            <span class="radio-container"
+              ><input type="radio" :checked="store.theme === 'dark'" /></span
+          ></Button>
         </div>
       </div>
-      <div class="setting-block">
+      <div
+        class="setting-block setting-block-horizontal setting-block-verse-numbers"
+      >
         <label class="setting-label">Verse numbers</label>
         <div class="setting-block-control control-verse-numbers">
-          <Button
-            icon="eye-open"
-            class="btn-setting-block"
-            @click="store.displayVerseNumbers = true"
-            :inactive="!store.displayVerseNumbers"
-            >Visible</Button
-          >
-          <Button
-            icon="eye-closed"
-            class="btn-setting-block"
-            @click="store.displayVerseNumbers = false"
-            :inactive="store.displayVerseNumbers"
-            >Hidden</Button
-          >
+          <Switch v-model="store.displayVerseNumbers" />
         </div>
       </div>
       <div class="setting-block">
-        <label class="setting-label">Font</label>
         <ul
           class="setting-block-control setting-block-control-slider control-font"
         >
           <li
+            v-for="font in fontOptions"
             :class="{
               'control-font-option': true,
-              active: store.bodyFont === 'kings-caslon',
+              active: store.bodyFont === font.value,
             }"
-            data-font="kings-caslon"
-            @click="store.bodyFont = 'kings-caslon'"
-            :inactive="store.bodyFont !== 'kings-caslon'"
+            :data-font="font.value"
+            @click="store.bodyFont = font.value"
           >
-            King's Caslon
+            {{ font.displayName }}
             <Icon
-              v-if="store.bodyFont === 'kings-caslon'"
-              name="check"
-              color="var(--color-text-primary)"
-            />
-          </li>
-          <li
-            :class="{
-              'control-font-option': true,
-              active: store.bodyFont === 'franklin-gothic-atf',
-            }"
-            data-font="franklin-gothic-atf"
-            @click="store.bodyFont = 'franklin-gothic-atf'"
-          >
-            Franklin Gothic
-            <Icon
-              v-if="store.bodyFont === 'franklin-gothic-atf'"
-              name="check"
-              color="var(--color-text-primary)"
-            />
-          </li>
-          <li
-            :class="{
-              'control-font-option': true,
-              active: store.bodyFont === 'freight-text-pro',
-            }"
-            data-font="freight-text-pro"
-            @click="store.bodyFont = 'freight-text-pro'"
-          >
-            Freight Text
-            <Icon
-              v-if="store.bodyFont === 'freight-text-pro'"
-              name="check"
-              color="var(--color-text-primary)"
-            />
-          </li>
-          <li
-            :class="{
-              'control-font-option': true,
-              active: store.bodyFont === 'system',
-            }"
-            data-font="system"
-            @click="
-              store.bodyFont =
-                'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif'
-            "
-          >
-            System font
-            <Icon
-              v-if="store.bodyFont.includes('system')"
+              v-if="store.bodyFont === font.value"
               name="check"
               color="var(--color-text-primary)"
             />
@@ -158,7 +133,6 @@ watch(
         </ul>
       </div>
       <div class="setting-block">
-        <label class="setting-label" for="font-size">Font size</label>
         <div class="setting-block-control control-font-size">
           <input
             type="range"
@@ -177,7 +151,6 @@ watch(
         </div>
       </div>
       <div class="setting-block">
-        <label class="setting-label" for="line-length">Line length</label>
         <div
           class="setting-block-control setting-block-control-slider control-line-length"
         >
@@ -211,17 +184,26 @@ watch(
   position: fixed;
   right: 0;
   top: 0;
-  width: 320px;
+  width: 300px;
   height: 100vh;
   padding: 36px;
-  background-color: var(--color-bg-surface-2);
-  border-left: 1px solid var(--color-border-secondary);
+  background-color: var(--color-bg-surface-1);
+  border-left: 1px solid var(--color-border-primary);
+  /* box-shadow: -2px 0 10px rgb(0 0 0 / 10%), -4px 0 15px rgb(0 0 0 / 5%),
+    -20px 0px 75px rgb(0 0 0 / 20%); */
+  overflow: auto;
 }
 
 .settings-primary-content {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
+}
+
+.settings-header {
+  margin-top: -16px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .setting-block {
@@ -229,13 +211,20 @@ watch(
   flex-direction: column;
   gap: 10px;
 }
-.btn-setting-block {
-  flex-grow: 1;
+
+.setting-block-horizontal {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  border: 1px solid var(--color-border-primary);
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
 .setting-label {
   font-size: var(--14px);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--color-text-primary);
 }
 
@@ -250,7 +239,7 @@ watch(
   margin: 0;
   padding: 0;
   border: 1px solid var(--color-border-primary);
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -281,26 +270,35 @@ watch(
 }
 
 .control-font-option[data-font="kings-caslon"] {
-  font-size: var(--18px);
+  font-size: var(--16px);
   font-family: kings-caslon;
 }
 
-.control-font-option[data-font="franklin-gothic-atf"] {
-  font-family: franklin-gothic-atf;
+.control-font-option[data-font="plantin"] {
+  font-size: var(--16px);
+  font-family: plantin;
 }
 
 .control-font-option[data-font="freight-text-pro"] {
-  font-size: var(--19px);
+  font-size: var(--16px);
   font-family: freight-text-pro;
 }
 
 .control-font-option[data-font="system"] {
-  font-size: var(--17px);
+  font-size: var(--15px);
   font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-.setting-block-control-slider {
-  margin-top: -5px;
+.control-theme {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.radio-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .settings-slider {

@@ -52,7 +52,7 @@ const props = defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   height: 44px;
   flex-shrink: 0;
   padding-inline: 8px;
@@ -69,7 +69,7 @@ const props = defineProps({
 
 /*-- Primary buttons --*/
 .btn-primary {
-  padding: 8px 14px 8px;
+  padding: 8px 14px;
   background-color: var(--color-bg-button-primary);
   box-shadow: inset 0 0 0 1px var(--color-border-button-primary);
   color: var(--color-text-button-primary);
@@ -78,6 +78,8 @@ const props = defineProps({
 .btn-primary.inactive {
   background-color: transparent;
   color: var(--color-text-muted);
+  font-weight: 400;
+  box-shadow: inset 0 0 0 1px var(--color-border-primary);
 }
 .btn-primary.inactive :deep(.btn-icon) {
   opacity: 0.75;
@@ -88,7 +90,7 @@ const props = defineProps({
 }
 
 .btn-primary.has-icon:not(.icon-only) {
-  padding: 8px 14px 8px 11px;
+  padding: 6px 14px 6px 14px;
 }
 
 .btn-primary:hover {
