@@ -185,5 +185,5 @@ input[type="range"]:focus::-webkit-slider-thumb {
   box-shadow: 0 0 0 3px var(--color-bg-surface-1);
 }
 input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: var(--color-bg-input-active);
+  background: var(--color-accent);
 }
