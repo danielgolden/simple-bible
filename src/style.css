@@ -88,6 +88,9 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
   color-scheme: dark;
   -webkit-font-smoothing: antialiased;
+
+  --color-accent: #75b4ff;
+
   --color-bg-surface-1: rgb(25 25 25);
   --color-bg-surface-2: #161616;
 
@@ -125,11 +128,11 @@ html[data-theme="dark"] {
   --color-bg-input-active-enabled: #14315d;
   --color-bg-input-enabled-indicator: rgb(53 67 89 / 60%);
   --color-bg-input-inactive: #3b3b3b;
-  --color-bg-input-active: #459aff;
+  --color-bg-input-active: #115fbb;
   --color-input-interactive: var(--color-text-primary);
 
   --color-bg-interactive: transparent;
-  --color-bg-interactive-hover: #191919;
+  --color-bg-interactive-hover: rgb(255 255 255 / 1.5%);
   --color-bg-interactive-active: #202020;
   --color-bg-interactive-active-hover: var(--color-bg-interactive-active);
   --color-bg-interactive-focused: var(--color-text-tertiary);
@@ -148,7 +151,7 @@ body {
   justify-content: center;
   font-family: var(--font-family-heading);
   background-color: var(--color-bg-surface-1);
-  accent-color: var(--color-bg-input-active);
+  accent-color: var(--color-accent);
 }
 
 input[type="range"] {
