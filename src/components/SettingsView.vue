@@ -70,119 +70,124 @@ watch(
   <transition name="overlay">
     <div class="overlay" v-if="store.settingsViewActive"></div>
   </transition>
-  <section class="settings">
-    <div class="settings-header">
-      <Button
-        class="btn-close-settings"
-        icon="cross-1"
-        @click="store.settingsViewActive = false"
-        type="tertiary"
-      />
-    </div>
-    <div class="settings-primary-content">
-      <div class="settings-section">
-        <h3 class="settings-section-heading">Design</h3>
+  <transition name="settings">
+    <section class="settings" v-if="store.settingsViewActive">
+      <div class="settings-header">
+        <Button
+          class="btn-close-settings"
+          icon="cross-1"
+          @click="store.settingsViewActive = false"
+          type="tertiary"
+        />
+      </div>
+      <div class="settings-primary-content">
+        <div class="settings-section">
+          <h3 class="settings-section-heading">Design</h3>
 
-        <div class="setting-block">
-          <div class="setting-block-control control-theme">
-            <Button
-              icon="sun"
-              class="btn-setting-block"
-              @click="store.theme = 'light'"
-              >Light
-              <span class="radio-container"
-                ><input type="radio" :checked="store.theme === 'light'" /></span
-            ></Button>
-            <Button
-              icon="moon"
-              class="btn-setting-block"
-              @click="store.theme = 'dark'"
-              >Dark
-              <span class="radio-container"
-                ><input type="radio" :checked="store.theme === 'dark'" /></span
-            ></Button>
+          <div class="setting-block">
+            <div class="setting-block-control control-theme">
+              <Button
+                icon="sun"
+                class="btn-setting-block"
+                @click="store.theme = 'light'"
+                >Light
+                <span class="radio-container"
+                  ><input
+                    type="radio"
+                    :checked="store.theme === 'light'" /></span
+              ></Button>
+              <Button
+                icon="moon"
+                class="btn-setting-block"
+                @click="store.theme = 'dark'"
+                >Dark
+                <span class="radio-container"
+                  ><input
+                    type="radio"
+                    :checked="store.theme === 'dark'" /></span
+              ></Button>
+            </div>
           </div>
-        </div>
 
-        <div class="setting-block">
-          <ul class="setting-block-control control-font">
-            <li
-              v-for="font in fontOptions"
-              :class="{
-                'control-font-option': true,
-                active: store.bodyFont === font.value,
-              }"
-              :data-font="font.value"
-              @click="store.bodyFont = font.value"
-            >
-              {{ font.displayName }}
-              <Icon
-                v-if="store.bodyFont === font.value"
-                name="check"
-                color="var(--color-text-primary)"
+          <div class="setting-block">
+            <ul class="setting-block-control control-font">
+              <li
+                v-for="font in fontOptions"
+                :class="{
+                  'control-font-option': true,
+                  active: store.bodyFont === font.value,
+                }"
+                :data-font="font.value"
+                @click="store.bodyFont = font.value"
+              >
+                {{ font.displayName }}
+                <Icon
+                  v-if="store.bodyFont === font.value"
+                  name="check"
+                  color="var(--color-text-primary)"
+                />
+              </li>
+            </ul>
+          </div>
+
+          <div class="settings-box setting-box-horizontal">
+            <div class="settings-row">
+              <label class="settings-row-label"
+                ><Icon name="font-size" color="var(--color-icon-primary)" />Font
+                size</label
+              >
+              <input
+                type="range"
+                class="settings-slider"
+                id="font-size"
+                v-model="store.fontSize"
+                name="volume"
+                step=".05"
+                min=".813"
+                max="2.25"
               />
-            </li>
-          </ul>
+            </div>
+            <div class="settings-row">
+              <label class="settings-row-label"
+                ><Icon name="width" color="var(--color-icon-primary)" /> Line
+                length</label
+              >
+              <input
+                type="range"
+                class="settings-slider"
+                id="font-size"
+                v-model="store.lineLength"
+                name="volume"
+                min="50"
+                max="70"
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="settings-box setting-box-horizontal">
-          <div class="settings-row">
-            <label class="settings-row-label"
-              ><Icon name="font-size" color="var(--color-icon-primary)" />Font
-              size</label
-            >
-            <input
-              type="range"
-              class="settings-slider"
-              id="font-size"
-              v-model="store.fontSize"
-              name="volume"
-              step=".05"
-              min=".813"
-              max="2.25"
-            />
-          </div>
-          <div class="settings-row">
-            <label class="settings-row-label"
-              ><Icon name="width" color="var(--color-icon-primary)" /> Line
-              length</label
-            >
-            <input
-              type="range"
-              class="settings-slider"
-              id="font-size"
-              v-model="store.lineLength"
-              name="volume"
-              min="50"
-              max="70"
-            />
+        <div class="settings-section">
+          <h3 class="settings-section-heading">Content</h3>
+          <div class="settings-box setting-box-horizontal">
+            <label class="settings-row" for="verse-numbers">
+              <span class="settings-row-label">Verse numbers</span>
+              <Switch id="verse-numbers" v-model="store.displayVerseNumbers" />
+            </label>
+            <label class="settings-row" for="jesus-words">
+              <span class="settings-row-label">Jesus' words in red</span>
+              <Switch id="jesus-words" v-model="store.highlightJesusWords" />
+            </label>
           </div>
         </div>
       </div>
-
-      <div class="settings-section">
-        <h3 class="settings-section-heading">Content</h3>
-        <div class="settings-box setting-box-horizontal">
-          <label class="settings-row" for="verse-numbers">
-            <span class="settings-row-label">Verse numbers</span>
-            <Switch id="verse-numbers" v-model="store.displayVerseNumbers" />
-          </label>
-          <label class="settings-row" for="jesus-words">
-            <span class="settings-row-label">Jesus' words in red</span>
-            <Switch id="jesus-words" v-model="store.highlightJesusWords" />
-          </label>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
+  </transition>
 </template>
 
 <style scoped>
 .overlay {
   inset: 0;
-  position: absolute;
+  position: fixed;
   background-color: var(--color-bg-overlay);
-  transition: opacity 800ms var(--ease-in-out-cubic);
 }
 .settings {
   position: fixed;
@@ -419,11 +424,24 @@ span.settings-row-label {
 /* we will explain what these classes do next! */
 .overlay-enter-active,
 .overlay-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 300ms var(--ease-out-cubic);
+  opacity: 1;
 }
 
 .overlay-enter-from,
 .overlay-leave-to {
   opacity: 0;
+}
+
+.settings-enter-active {
+  transition: translate 500ms var(--ease-out-quint);
+}
+.settings-leave-active {
+  transition: translate 200ms var(--ease-in-quad);
+}
+
+.settings-enter-from,
+.settings-leave-to {
+  translate: 373px 0;
 }
 </style>

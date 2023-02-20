@@ -122,28 +122,30 @@ watch(
 </script>
 
 <template>
-  <div
-    :class="{
-      reader: true,
-      'settings-view-active': store.settingsViewActive,
-      'highlight-jesus-words': store.highlightJesusWords,
-      'show-verse-numbers': store.displayVerseNumbers,
-    }"
-    v-if="contentLoaded"
-    ref="reader"
-  >
-    <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
-    <section class="body-content" v-html="content"></section>
+  <transition name="reader">
+    <div
+      :class="{
+        reader: true,
+        'settings-view-active': store.settingsViewActive,
+        'highlight-jesus-words': store.highlightJesusWords,
+        'show-verse-numbers': store.displayVerseNumbers,
+      }"
+      v-if="contentLoaded"
+      ref="reader"
+    >
+      <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
+      <section class="body-content" v-html="content"></section>
 
-    <Button
-      icon="settings"
-      class="btn-settings"
-      type="tertiary"
-      @click="store.settingsViewActive = !store.settingsViewActive"
-    ></Button>
-  </div>
+      <Button
+        icon="settings"
+        class="btn-settings"
+        type="tertiary"
+        @click="store.settingsViewActive = !store.settingsViewActive"
+      ></Button>
+    </div>
+  </transition>
 
-  <SettingsView v-if="store.settingsViewActive" />
+  <SettingsView />
 </template>
 
 <style scoped>
@@ -155,6 +157,7 @@ main {
   flex-direction: column;
   align-items: center;
   padding: 0 7vw 16vw;
+  transition: scale 300ms var(--ease-in-out-quad);
 
   --verse-numbers-display: inline;
   --body-font-size: var(--22px);
@@ -212,6 +215,12 @@ main {
   position: fixed;
   bottom: 16px;
   right: 16px;
+}
+
+.settings-view-active {
+  scale: 0.99;
+  /* height: 100vh;
+  overflow: hidden; */
 }
 
 .settings-view-active .btn-settings {
