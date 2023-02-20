@@ -71,6 +71,7 @@ const props = defineProps(["modelValue", "label", "label-for"]);
   inline-size: var(--thumb-size);
   block-size: var(--thumb-size);
   background-color: var(--thumb-color);
+  box-shadow: 0 1px 0 rgb(50 75 150 / 0.25), 0 2px 2px rgb(50 75 150 / 0.5);
   transition: all 0.2s var(--ease-in-out-cubic);
 }
 

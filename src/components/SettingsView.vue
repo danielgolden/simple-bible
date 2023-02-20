@@ -8,7 +8,7 @@ import Icon from "./Icon.vue";
 const fontOptions = [
   {
     id: "caslon",
-    displayName: "King's Caslon",
+    displayName: "Caslon",
     value: "kings-caslon",
   },
   {
@@ -18,7 +18,7 @@ const fontOptions = [
   },
   {
     id: "freight",
-    displayName: "Freight Text",
+    displayName: "Freight",
     value: "freight-text-pro",
   },
   {
@@ -27,6 +27,13 @@ const fontOptions = [
     value: "inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
   },
 ];
+
+watch(
+  () => store.theme,
+  (newValue) => {
+    document.documentElement.dataset.theme = store.theme;
+  }
+);
 
 watch(
   () => store.displayVerseNumbers,
@@ -80,14 +87,13 @@ watch(
       />
     </div>
     <div class="settings-primary-content">
-      <h3>Design</h3>
+      <h3 class="settings-heading">Design</h3>
       <div class="setting-block">
         <div class="setting-block-control control-theme">
           <Button
             icon="sun"
             class="btn-setting-block"
             @click="store.theme = 'light'"
-            :inactive="store.theme === 'dark'"
             >Light
             <span class="radio-container"
               ><input type="radio" :checked="store.theme === 'light'" /></span
@@ -188,7 +194,7 @@ watch(
   height: 100vh;
   padding: 36px;
   background-color: var(--color-bg-surface-1);
-  border-left: 1px solid var(--color-border-primary);
+  border-left: 1px solid var(--color-border-secondary);
   /* box-shadow: -2px 0 10px rgb(0 0 0 / 10%), -4px 0 15px rgb(0 0 0 / 5%),
     -20px 0px 75px rgb(0 0 0 / 20%); */
   overflow: auto;
@@ -197,13 +203,20 @@ watch(
 .settings-primary-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .settings-header {
   margin-top: -16px;
   display: flex;
   justify-content: flex-end;
+}
+
+.settings-heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
 }
 
 .setting-block {
@@ -235,6 +248,9 @@ watch(
 }
 
 .control-font {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -247,7 +263,7 @@ watch(
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 9px 16px;
   border-bottom: 1px solid var(--color-border-primary);
   cursor: pointer;
   color: var(--color-text-muted);
@@ -265,12 +281,17 @@ watch(
   background-color: var(--color-bg-interactive-hover);
 }
 
-.control-font-option:last-child {
+.control-font-option:last-child,
+.control-font-option:nth-child(3) {
   border-bottom: none;
 }
 
+.control-font-option:nth-child(odd) {
+  border-right: 1px solid var(--color-border-primary);
+}
+
 .control-font-option[data-font="kings-caslon"] {
-  font-size: var(--16px);
+  font-size: var(--17px);
   font-family: kings-caslon;
 }
 
@@ -280,11 +301,11 @@ watch(
 }
 
 .control-font-option[data-font="freight-text-pro"] {
-  font-size: var(--16px);
+  font-size: var(--17px);
   font-family: freight-text-pro;
 }
 
-.control-font-option[data-font="system"] {
+.control-font-option:last-child {
   font-size: var(--15px);
   font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }

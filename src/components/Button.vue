@@ -70,7 +70,7 @@ const props = defineProps({
 /*-- Primary buttons --*/
 .btn-primary {
   padding: 8px 14px;
-  background-color: var(--color-bg-button-primary);
+  background-color: transparent;
   box-shadow: inset 0 0 0 1px var(--color-border-button-primary);
   color: var(--color-text-button-primary);
 }
