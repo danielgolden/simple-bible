@@ -6,6 +6,7 @@ export const store = reactive({
   bodyFont: "kings-caslon",
   theme: "dark",
   displayVerseNumbers: true,
+  highlightJesusWords: true,
   lineLength: 60,
   fontSize: 1.375,
   readerElement: <null | HTMLElement>null,

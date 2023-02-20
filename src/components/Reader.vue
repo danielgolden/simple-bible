@@ -123,7 +123,12 @@ watch(
 
 <template>
   <div
-    :class="{ reader: true, 'settings-view-active': store.settingsViewActive }"
+    :class="{
+      reader: true,
+      'settings-view-active': store.settingsViewActive,
+      'highlight-jesus-words': store.highlightJesusWords,
+      'show-verse-numbers': store.displayVerseNumbers,
+    }"
     v-if="contentLoaded"
     ref="reader"
   >
@@ -163,8 +168,10 @@ main {
   font-family: var(--font-family-body);
   color: var(--color-text-secondary);
 }
-
-.body-content :deep(.v) {
+:deep(.v) {
+  display: none;
+}
+.show-verse-numbers :deep(.v) {
   display: var(--verse-numbers-display);
   margin-right: 0.18rem;
   color: var(--color-text-tertiary);
@@ -194,6 +201,9 @@ main {
 }
 
 :deep(.wj) {
+  transition: color 200ms var(--ease-in-out-cubic);
+}
+.highlight-jesus-words :deep(.wj) {
   color: var(--color-text-jesus-words);
 }
 

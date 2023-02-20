@@ -36,16 +36,6 @@ watch(
 );
 
 watch(
-  () => store.displayVerseNumbers,
-  (newValue) => {
-    store.readerElement!.style.setProperty(
-      "--verse-numbers-display",
-      store.displayVerseNumbers ? "inline" : "none"
-    );
-  }
-);
-
-watch(
   () => store.bodyFont,
   (newValue) => {
     document.documentElement.style.setProperty(
@@ -108,18 +98,9 @@ watch(
           ></Button>
         </div>
       </div>
-      <div
-        class="setting-block setting-block-horizontal setting-block-verse-numbers"
-      >
-        <label class="setting-label">Verse numbers</label>
-        <div class="setting-block-control control-verse-numbers">
-          <Switch v-model="store.displayVerseNumbers" />
-        </div>
-      </div>
+
       <div class="setting-block">
-        <ul
-          class="setting-block-control setting-block-control-slider control-font"
-        >
+        <ul class="setting-block-control control-font">
           <li
             v-for="font in fontOptions"
             :class="{
@@ -138,8 +119,14 @@ watch(
           </li>
         </ul>
       </div>
-      <div class="setting-block">
-        <div class="setting-block-control control-font-size">
+      <div class="setting-block setting-block-horizontal">
+        <label class="setting-label"
+          ><Icon name="font-size" color="var(--color-icon-primary)" />Font
+          size</label
+        >
+        <div
+          class="setting-block-control setting-block-control-slider control-font-size"
+        >
           <input
             type="range"
             class="settings-slider"
@@ -156,7 +143,11 @@ watch(
           </div>
         </div>
       </div>
-      <div class="setting-block">
+      <div class="setting-block setting-block-horizontal">
+        <label class="setting-label"
+          ><Icon name="width" color="var(--color-icon-primary)" /> Line
+          length</label
+        >
         <div
           class="setting-block-control setting-block-control-slider control-line-length"
         >
@@ -179,6 +170,24 @@ watch(
               ><Icon name="box" color="var(--color-text-tertiary)"
             /></span>
           </div>
+        </div>
+      </div>
+
+      <h3 class="settings-heading">Content</h3>
+      <div
+        class="setting-block setting-block-horizontal setting-block-verse-numbers"
+      >
+        <label class="setting-label">Verse numbers</label>
+        <div class="setting-block-control control-verse-numbers">
+          <Switch v-model="store.displayVerseNumbers" />
+        </div>
+      </div>
+      <div
+        class="setting-block setting-block-horizontal setting-block-jesus-words"
+      >
+        <label class="setting-label">Jesus' words in red</label>
+        <div class="setting-block-control control-verse-numbers">
+          <Switch v-model="store.highlightJesusWords" />
         </div>
       </div>
     </div>
@@ -219,6 +228,10 @@ watch(
   color: var(--color-text-primary);
 }
 
+.settings-heading:not(:first-child) {
+  margin-top: 24px;
+}
+
 .setting-block {
   display: flex;
   flex-direction: column;
@@ -236,9 +249,17 @@ watch(
 }
 
 .setting-label {
+  display: flex;
+  flex-grow: 1;
+  gap: 8px;
+  align-items: center;
   font-size: var(--14px);
   font-weight: 400;
   color: var(--color-text-primary);
+}
+
+.setting-block-horizontal .setting-label {
+  width: 120px;
 }
 
 .control-theme,
@@ -329,7 +350,7 @@ watch(
 
 .settings-slider-labels {
   margin-top: -2px;
-  display: flex;
+  display: none;
   justify-content: space-between;
   color: var(--color-text-muted);
 }
@@ -340,5 +361,10 @@ watch(
 
 .control-font-size .settings-slider-label-max {
   font-size: var(--18px);
+}
+
+.setting-block-control-slider {
+  margin-top: -9px;
+  flex-grow: 1;
 }
 </style>
