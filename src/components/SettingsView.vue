@@ -67,6 +67,9 @@ watch(
 </script>
 
 <template>
+  <transition name="overlay">
+    <div class="overlay" v-if="store.settingsViewActive"></div>
+  </transition>
   <section class="settings">
     <div class="settings-header">
       <Button
@@ -175,6 +178,12 @@ watch(
 </template>
 
 <style scoped>
+.overlay {
+  inset: 0;
+  position: absolute;
+  background-color: var(--color-bg-overlay);
+  transition: opacity 800ms var(--ease-in-out-cubic);
+}
 .settings {
   position: fixed;
   right: 0;
@@ -187,6 +196,7 @@ watch(
   /* box-shadow: -2px 0 10px rgb(0 0 0 / 10%), -4px 0 15px rgb(0 0 0 / 5%),
     -20px 0px 75px rgb(0 0 0 / 20%); */
   overflow: auto;
+  z-index: 1;
 }
 
 .settings-primary-content {
@@ -243,7 +253,6 @@ watch(
   width: 120px;
 }
 
-.control-theme,
 .control-verse-numbers {
   display: flex;
   gap: 12px;
@@ -315,7 +324,7 @@ watch(
 .control-theme {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 16px;
+  grid-gap: 12px;
 }
 
 .radio-container {
@@ -354,12 +363,12 @@ watch(
 .settings-section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 .settings-section-heading {
   margin: 0;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 
@@ -403,5 +412,18 @@ span.settings-row-label {
 
 .settings-row > input[type="range"] {
   margin: 0;
+}
+
+/*-- Animations --*/
+
+/* we will explain what these classes do next! */
+.overlay-enter-active,
+.overlay-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.overlay-enter-from,
+.overlay-leave-to {
+  opacity: 0;
 }
 </style>

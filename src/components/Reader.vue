@@ -142,6 +142,7 @@ watch(
       @click="store.settingsViewActive = !store.settingsViewActive"
     ></Button>
   </div>
+
   <SettingsView v-if="store.settingsViewActive" />
 </template>
 
