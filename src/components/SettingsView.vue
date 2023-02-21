@@ -68,7 +68,11 @@ watch(
 
 <template>
   <transition name="overlay">
-    <div class="overlay" v-if="store.settingsViewActive"></div>
+    <div
+      class="overlay"
+      v-if="store.settingsViewActive"
+      @click="store.settingsViewActive = false"
+    ></div>
   </transition>
   <transition name="settings">
     <section class="settings" v-if="store.settingsViewActive">
@@ -368,7 +372,7 @@ watch(
 .settings-section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 .settings-section-heading {
   margin: 0;
