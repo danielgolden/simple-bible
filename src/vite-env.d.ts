@@ -1,5 +1,8 @@
 /// <reference types="vite/client" />
 
-interface Books {
-  [key: string]: string;
+interface BooksJSON {
+  id: string;
+  name: string;
+  chapterCount: number;
+  abbreviation: string;
 }

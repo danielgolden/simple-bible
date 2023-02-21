@@ -3,6 +3,7 @@ import { reactive } from "vue";
 
 export const store = reactive({
   settingsViewActive: false,
+  navigationActive: false,
   bodyFont: "kings-caslon",
   theme: "dark",
   displayVerseNumbers: true,

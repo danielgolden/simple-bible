@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import Button from "./Button.vue";
+import books from "../books.json";
 import { store } from "../store";
 import SettingsView from "./SettingsView.vue";
+import NavigationView from "./NavigationView.vue";
 
 const reader = ref<HTMLElement | null>(null);
-const router = useRouter();
 const route = useRoute();
 const content = ref("");
 const contentLoaded = ref(false);
-const book: string = route.params.book
-  ? route.params.book.toString()
-  : "matthew";
-const chapter: string = route.params.chapter
+let book: string = route.params.book ? route.params.book.toString() : "matthew";
+let chapter: string = route.params.chapter
   ? route.params.chapter.toString()
   : "1";
 
@@ -30,88 +29,28 @@ const formatBookTitle = () => {
   return book.charAt(0).toUpperCase() + book.slice(1);
 };
 
-const books: Books = {
-  genesis: "GEN",
-  exodus: "EXO",
-  leviticus: "LEV",
-  numbers: "NUM",
-  deuteronomy: "DEU",
-  joshua: "JOS",
-  judges: "JDG",
-  ruth: "RUT",
-  "1samuel": "1SA",
-  "2samuel": "2SA",
-  "1kings": "1KI",
-  "2kings": "2KI",
-  "1chronicles": "1CH",
-  "2chronicles": "2CH",
-  ezra: "EZR",
-  nehemiah: "NEH",
-  esther: "EST",
-  job: "JOB",
-  psalms: "PSA",
-  proverbs: "PRO",
-  ecclesiastes: "ECC",
-  songofsolomon: "SNG",
-  isaiah: "ISA",
-  jeremiah: "JER",
-  lamentations: "LAM",
-  ezekiel: "EZK",
-  daniel: "DAN",
-  hosea: "HOS",
-  joel: "JOL",
-  amos: "AMO",
-  obadiah: "OBA",
-  jonah: "JON",
-  micah: "MIC",
-  nahum: "NAM",
-  habakkuk: "HAB",
-  zephaniah: "ZEP",
-  haggai: "HAG",
-  zechariah: "ZEC",
-  malachi: "MAL",
-  matthew: "MAT",
-  mark: "MRK",
-  luke: "LUK",
-  john: "JHN",
-  acts: "ACT",
-  romans: "ROM",
-  "1corinthians": "1CO",
-  "2corinthians": "2CO",
-  galatians: "GAL",
-  ephesians: "EPH",
-  philippians: "PHP",
-  colossians: "COL",
-  "1thessalonians": "1TH",
-  "2thessalonians": "2TH",
-  "1timothy": "1TI",
-  "2timothy": "2TI",
-  titus: "TIT",
-  philemon: "PHM",
-  hebrews: "HEB",
-  james: "JAS",
-  "1peter": "1PE",
-  "2peter": "2PE",
-  "1john": "1JN",
-  "2john": "2JN",
-  "3john": "3JN",
-  jude: "JUD",
-  revelation: "REV",
+const getBookAbbreviation = (bookId: string) => {
+  const bookData = books.find((book) => book.id === bookId);
+  return bookData?.abbreviation;
 };
 
-fetch(
-  `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-02/chapters/${books[book]}.${chapter}`,
-  {
-    headers: {
-      "api-key": "d24e35d1e97b1b9c536b80f5416d244e",
-    },
-  }
-)
-  .then((response) => response.json())
-  .then((data) => {
-    contentLoaded.value = true;
-    content.value = data.data.content.replaceAll("¶ ", "");
-  });
+const fetchContent = () => {
+  fetch(
+    `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-02/chapters/${getBookAbbreviation(
+      book
+    )}.${chapter}`,
+    {
+      headers: {
+        "api-key": "d24e35d1e97b1b9c536b80f5416d244e",
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      contentLoaded.value = true;
+      content.value = data.data.content.replaceAll("¶ ", "");
+    });
+};
 
 watch(
   () => reader.value,
@@ -119,6 +58,17 @@ watch(
     store.readerElement = reader.value;
   }
 );
+
+watch(
+  () => route.params,
+  () => {
+    book = route.params.book.toString();
+    chapter = route.params.chapter.toString();
+    fetchContent();
+  }
+);
+
+onMounted(() => fetchContent());
 </script>
 
 <template>
@@ -126,7 +76,7 @@ watch(
     <div
       :class="{
         reader: true,
-        'settings-view-active': store.settingsViewActive,
+        'menu-active': store.settingsViewActive || store.navigationActive,
         'highlight-jesus-words': store.highlightJesusWords,
         'show-verse-numbers': store.displayVerseNumbers,
       }"
@@ -142,9 +92,16 @@ watch(
         type="tertiary"
         @click="store.settingsViewActive = !store.settingsViewActive"
       ></Button>
+      <Button
+        icon="hamburger-menu"
+        class="btn-navigation"
+        type="tertiary"
+        @click="store.navigationActive = !store.navigationActive"
+      ></Button>
     </div>
   </transition>
 
+  <NavigationView />
   <SettingsView />
 </template>
 
@@ -163,6 +120,10 @@ main {
   --body-font-size: var(--22px);
   --title-font-size: calc(var(--body-font-size) * 1.6363636364);
   --body-line-length: 60ch;
+}
+
+.chapter-title {
+  width: 100%;
 }
 
 .body-content {
@@ -217,8 +178,15 @@ main {
   right: 16px;
 }
 
-.settings-view-active {
+.btn-navigation {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+}
+
+.menu-active {
   scale: 0.99;
+  /*  I think I can use transform-origin to prevent the weird long page side effects of just regular scale */
   /* height: 100vh;
   overflow: hidden; */
 }
@@ -242,11 +210,17 @@ main {
   }
 
   .reader {
-    padding: 0 4vw;
+    padding: 0 6vw;
   }
 
   .chapter-title {
-    padding: 50px 0;
+    padding: 100px 0 55px;
+  }
+
+  .btn-settings {
+    position: fixed;
+    top: 16px;
+    right: 16px;
   }
 }
 </style>
