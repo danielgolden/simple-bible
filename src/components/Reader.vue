@@ -203,10 +203,10 @@ main {
 }
 
 @media (max-width: 500px) {
-  section {
+  .body-content {
+    font-size: var(--20px);
     line-height: 150%;
     padding-bottom: 0;
-    font-size: var(--20px);
   }
 
   .reader {
@@ -214,7 +214,7 @@ main {
   }
 
   .chapter-title {
-    padding: 100px 0 55px;
+    padding: 75px 0 50px;
   }
 
   .btn-settings {
