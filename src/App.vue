@@ -1,7 +1,35 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { store } from "./store";
+
+const setUserColorSchemePreference = () => {
+  store.theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+  document.documentElement.dataset.theme = store.theme;
+};
+
+setUserColorSchemePreference();
+const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+if (mediaQuery?.addEventListener) {
+  mediaQuery.addEventListener("change", setUserColorSchemePreference);
+} else {
+  mediaQuery.addListener(setUserColorSchemePreference);
+}
+</script>
 
 <template>
-  <router-view></router-view>
+  <main :data-theme="store.theme">
+    <router-view></router-view>
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--color-bg-surface-1);
+}
+</style>

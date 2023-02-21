@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import Button from "./Button.vue";
+import { store } from "../store";
+import SettingsView from "./SettingsView.vue";
 
+const reader = ref<HTMLElement | null>(null);
 const router = useRouter();
 const route = useRoute();
 const content = ref("");
@@ -108,37 +112,78 @@ fetch(
     contentLoaded.value = true;
     content.value = data.data.content.replaceAll("¶ ", "");
   });
+
+watch(
+  () => reader.value,
+  () => {
+    store.readerElement = reader.value;
+  }
+);
 </script>
 
 <template>
-  <main class="reader" v-if="contentLoaded">
-    <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
-    <section v-html="content"></section>
-  </main>
+  <transition name="reader">
+    <div
+      :class="{
+        reader: true,
+        'settings-view-active': store.settingsViewActive,
+        'highlight-jesus-words': store.highlightJesusWords,
+        'show-verse-numbers': store.displayVerseNumbers,
+      }"
+      v-if="contentLoaded"
+      ref="reader"
+    >
+      <h1 class="chapter-title">{{ formatBookTitle() }} {{ chapter }}</h1>
+      <section class="body-content" v-html="content"></section>
+
+      <Button
+        icon="settings"
+        class="btn-settings"
+        type="tertiary"
+        @click="store.settingsViewActive = !store.settingsViewActive"
+      ></Button>
+    </div>
+  </transition>
+
+  <SettingsView />
 </template>
 
 <style scoped>
+main {
+  display: contents;
+}
 .reader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 7vw 16vw;
+  transition: scale 300ms var(--ease-in-out-quad);
+
+  --verse-numbers-display: inline;
+  --body-font-size: var(--22px);
+  --title-font-size: calc(var(--body-font-size) * 1.6363636364);
+  --body-line-length: 60ch;
 }
 
-section {
-  max-width: 60ch;
-  font-size: var(--22px);
+.body-content {
+  max-width: var(--body-line-length);
+  font-size: var(--body-font-size);
   line-height: 157%;
   font-family: var(--font-family-body);
   color: var(--color-text-secondary);
 }
-
-section :deep(.v) {
-  /* display: none; */
+:deep(.v) {
+  display: none;
+}
+.show-verse-numbers :deep(.v) {
+  display: var(--verse-numbers-display);
   margin-right: 0.18rem;
   color: var(--color-text-tertiary);
   vertical-align: super;
-  font-size: var(--14px);
+  font-size: 0.6em;
   line-height: 0;
   position: relative;
-  top: 3px;
+  top: 0.2em;
   -webkit-font-smoothing: auto;
   /* font-family: var(--font-family-heading); */
 }
@@ -150,16 +195,37 @@ section :deep(.v) {
 .chapter-title {
   align-items: center;
   justify-content: center;
-  padding: 75px 0;
+  padding: 2.1em 0;
   font-family: var(--font-family-heading);
-  font-size: var(--36px);
+  font-size: var(--title-font-size);
   margin: 0;
+  font-weight: 700;
   text-align: center;
   color: var(--color-text-primary);
 }
 
 :deep(.wj) {
+  transition: color 200ms var(--ease-in-out-cubic);
+}
+.highlight-jesus-words :deep(.wj) {
   color: var(--color-text-jesus-words);
+}
+
+.btn-settings {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}
+
+.settings-view-active {
+  scale: 0.99;
+  /* height: 100vh;
+  overflow: hidden; */
+}
+
+.settings-view-active .btn-settings {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 1024px) {
