@@ -12,14 +12,24 @@ const fontOptions = [
     value: "kings-caslon",
   },
   {
-    id: "plantin",
-    displayName: "Plantin",
-    value: "plantin",
+    id: "sentinel",
+    displayName: "Sentinel",
+    value: '"Sentinel A", "Sentinel B"',
   },
   {
-    id: "freight",
-    displayName: "Freight",
-    value: "freight-text-pro",
+    id: "mercury",
+    displayName: "Mercury",
+    value: '"Mercury Text G1 A", "Mercury Text G1 B"',
+  },
+  {
+    id: "ringside",
+    displayName: "Ringside",
+    value: '"Ringside Regular A", "Ringside Regular B"',
+  },
+  {
+    id: "whitney",
+    displayName: "Whitney",
+    value: '"Whitney A", "Whitney B"',
   },
   {
     id: "system",
